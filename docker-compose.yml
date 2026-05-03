@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  automation:
+    build: .
+    container_name: biz-announcement-bot
+    restart: unless-stopped
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - TZ=Asia/Seoul
+    volumes:
+      # 설정 파일 (외부에서 편집 가능)
+      - ./config:/app/config
+      # 수집된 문서 및 초안 (호스트에 보관)
+      - ./output:/app/output
+      # 데이터베이스 (호스트에 보관)
+      - ./data:/app/data
+      # 로그 (호스트에 보관)
+      - ./logs:/app/logs
+    command: ["python", "main.py", "--schedule", "--now"]

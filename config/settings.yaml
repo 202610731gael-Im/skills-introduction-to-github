@@ -1,0 +1,106 @@
+# ============================================================
+# 지원사업 공고 자동화 시스템 - 설정 파일
+# ============================================================
+
+# 스케줄러 설정
+scheduler:
+  run_time: "07:00"          # 매일 실행 시각 (24시간 형식)
+  timezone: "Asia/Seoul"
+
+# 모니터링 대상 사이트 목록
+sites:
+  - id: bizinfo
+    name: "기업마당"
+    enabled: true
+    url: "https://www.bizinfo.go.kr/web/lay1/bbs/S1T122C128/AS/74/list.do"
+    type: "bizinfo"
+
+  - id: kstartup
+    name: "K-스타트업"
+    enabled: true
+    url: "https://www.k-startup.go.kr/web/contents/bizpbanc-ongoing.do"
+    type: "kstartup"
+
+  - id: smba
+    name: "중소벤처기업부"
+    enabled: true
+    url: "https://www.mss.go.kr/site/smba/02/10204000000002016110303.jsp"
+    type: "generic"
+
+# 우리 기업 프로필 (적합성 분석에 사용)
+company_profile:
+  name: "우리 기업"
+  industry: "IT서비스"                   # 업종
+  sub_industry: "소프트웨어 개발"
+  established_year: 2020                  # 설립연도
+  employee_count: 15                      # 직원 수
+  annual_revenue_million: 500             # 연매출 (백만원)
+  region: "서울"                          # 소재지
+  certifications:                         # 보유 인증
+    - "벤처기업확인"
+    - "이노비즈"
+  company_type: "중소기업"               # 대기업/중견기업/중소기업/소상공인
+  keywords:                               # 관심 키워드
+    - "디지털전환"
+    - "AI"
+    - "스마트공장"
+    - "수출"
+    - "R&D"
+    - "인력양성"
+
+# 적합성 분석 설정
+eligibility:
+  min_score_percent: 70                   # 최소 적합도 점수 (%)
+  use_llm: true                           # LLM 분석 사용 여부
+  llm_model: "gpt-4o"                    # 사용할 LLM 모델
+
+# OpenAI API 설정 (환경변수 OPENAI_API_KEY 권장)
+openai:
+  api_key: ""                             # 또는 환경변수 OPENAI_API_KEY 사용
+  model: "gpt-4o"
+  max_tokens: 4000
+
+# 문서 다운로드 설정
+downloader:
+  output_dir: "output/documents"
+  supported_extensions:
+    - ".pdf"
+    - ".hwp"
+    - ".docx"
+    - ".xlsx"
+    - ".zip"
+  convert_hwp_to_pdf: false              # HWP → PDF 변환 (libreoffice 필요)
+
+# 초안 생성 설정
+generator:
+  output_dir: "output/drafts"
+  output_format: "docx"                  # docx 또는 md
+  include_summary: true                  # 요약 브리핑
+  include_business_plan: true            # 사업계획서 초안
+  include_checklist: true                # 체크리스트
+
+# 이메일 알림 설정
+email:
+  enabled: false                         # 이메일 발송 활성화
+  smtp_host: "smtp.gmail.com"
+  smtp_port: 587
+  sender: "your_email@gmail.com"
+  password: ""                           # 환경변수 EMAIL_PASSWORD 권장
+  recipients:
+    - "recipient@example.com"
+
+# 슬랙 알림 설정
+slack:
+  enabled: false
+  webhook_url: ""                        # 환경변수 SLACK_WEBHOOK_URL 권장
+
+# 데이터베이스 설정
+database:
+  path: "data/announcements.db"
+
+# 로그 설정
+logging:
+  level: "INFO"
+  file: "logs/system.log"
+  max_bytes: 10485760                    # 10MB
+  backup_count: 5
