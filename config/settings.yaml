@@ -4,7 +4,7 @@
 
 # 스케줄러 설정
 scheduler:
-  run_time: "07:00"          # 매일 실행 시각 (24시간 형식)
+  run_time: "09:10"          # 매일 실행 시각 (24시간 형식)
   timezone: "Asia/Seoul"
 
 # 모니터링 대상 사이트 목록
